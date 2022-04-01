@@ -14,6 +14,8 @@ type Session interface {
 	LoginRequired() bool
 	AdminRequired() bool
 	Set(key string, value interface{})
+	Path() string
+	RSA() string
 }
 
 type AuthInterface interface {
@@ -87,7 +89,7 @@ func (authImp AuthImpl) VerifySigning(tokenString string) (map[string]interface{
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 		}
-		return authImp.Key, nil
+		return []byte(authImp.Key), nil
 	})
 
 	if err != nil {
