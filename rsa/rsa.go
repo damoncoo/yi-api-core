@@ -27,7 +27,7 @@ type RSA struct {
 	RSAPublicKey   *PublicKey
 }
 
-func (r RSA) InitRsaPrivateBlock() {
+func (r *RSA) InitRsaPrivateBlock() {
 
 	privateKey, privateChiper := cryp.RsaPrivateKey(r.RSAPrivatePath)
 	r.RSAPrivateKey = &PrivateKey{
