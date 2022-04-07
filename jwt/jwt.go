@@ -73,23 +73,23 @@ func (auth AuthImpl) Signing(uid int, living int64) (string, error) {
 		IssuedAt:  time.Now().Unix(),
 		ExpiresAt: time.Now().Unix() + living,
 		Id:        strconv.Itoa(uid),
-		Issuer:    "IMOVIE",
+		Issuer:    "YCX",
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	tokenString, err := token.SignedString(auth.Key)
+	tokenString, err := token.SignedString([]byte(auth.Key))
 	return tokenString, err
 }
 
 // VerifySigning token 验证
-func (authImp AuthImpl) VerifySigning(tokenString string) (map[string]interface{}, error) {
+func (auth AuthImpl) VerifySigning(tokenString string) (map[string]interface{}, error) {
 
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		// Don't forget to validate the alg is what you expect:
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 		}
-		return []byte(authImp.Key), nil
+		return []byte(auth.Key), nil
 	})
 
 	if err != nil {
