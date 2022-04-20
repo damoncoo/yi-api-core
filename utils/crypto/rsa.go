@@ -6,9 +6,10 @@ import (
 	"crypto/x509"
 	"encoding/base64"
 	"encoding/pem"
-	"io/ioutil"
 	"log"
 	"os"
+
+	"github.com/damoncoo/yi-api-core/utils"
 )
 
 // RsaPublicEncrypt 公钥加密
@@ -26,7 +27,7 @@ func RsaPrivateDecrypt(encryptStr string, key *rsa.PrivateKey, chiper []byte) (s
 // RsaPublicKey RsaPublicKey
 func RsaPublicKey(path string) (*rsa.PublicKey, []byte) {
 
-	keyData, err := ioutil.ReadFile(path)
+	keyData, err := utils.ContentOfPath(path)
 	if err != nil {
 		log.Printf("ERROR: fail get idrsapub, %s", err.Error())
 		return nil, []byte{}
@@ -54,7 +55,7 @@ func RsaPublicKey(path string) (*rsa.PublicKey, []byte) {
 // RsaPrivateKey RsaPrivateKey
 func RsaPrivateKey(path string) (*rsa.PrivateKey, []byte) {
 
-	keyData, err := ioutil.ReadFile(path)
+	keyData, err := utils.ContentOfPath(path)
 
 	if err != nil {
 		log.Printf("ERROR: fail get idrsa, %s", err.Error())
