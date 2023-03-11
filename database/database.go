@@ -8,6 +8,7 @@ import (
 	"xorm.io/xorm"
 
 	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/lib/pq"
 )
 
 type Storage struct {
