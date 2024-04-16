@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"io/ioutil"
+	"os"
 	"strings"
 
 	"github.com/go-resty/resty/v2"
@@ -21,7 +21,7 @@ func ContentOfPath(path string) (data []byte, err error) {
 		return
 
 	} else {
-		data, err = ioutil.ReadFile(path)
+		data, err = os.ReadFile(path)
 	}
 	return
 }
