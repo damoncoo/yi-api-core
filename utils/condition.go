@@ -1,7 +1,7 @@
 package utils
 
 // If 自定的三元计算
-func If(condition bool, trueVal, falseVal interface{}) interface{} {
+func If[T any](condition bool, trueVal, falseVal T) T {
 	if condition {
 		return trueVal
 	}
@@ -9,7 +9,7 @@ func If(condition bool, trueVal, falseVal interface{}) interface{} {
 }
 
 // Filter 筛选数组
-func Filter(slice []string, filter func(string) bool) (ret []string) {
+func Filter[T any](slice []T, filter func(T) bool) (ret []T) {
 	for _, s := range slice {
 		if filter(s) {
 			ret = append(ret, s)

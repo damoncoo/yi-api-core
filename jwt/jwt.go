@@ -68,12 +68,15 @@ func (authImp AuthImpl) Auth(session Session) error {
 // Signing 签名
 func (auth AuthImpl) Signing(uid int, living int64) (string, error) {
 
-	// claims := jwt.MapClaims(payload)
-	claims := jwt.StandardClaims{
-		IssuedAt:  time.Now().Unix(),
-		ExpiresAt: time.Now().Unix() + living,
-		Id:        strconv.Itoa(uid),
-		Issuer:    "YCX",
+	claims := jwt.RegisteredClaims{
+		IssuedAt: &jwt.NumericDate{
+			Time: time.Now(),
+		},
+		ExpiresAt: &jwt.NumericDate{
+			Time: time.Now().Add(time.Second * time.Duration(living)),
+		},
+		ID:     strconv.Itoa(uid),
+		Issuer: "YCX",
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
